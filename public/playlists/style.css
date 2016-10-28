@@ -1,0 +1,33 @@
+body{
+background: url(http://wallscreenart.com/wp-content/uploads/2016/07/new-abstract-purple-wallpaper.png);
+background-size: cover;
+background-attachment: fixed;
+}
+.btn{
+    background: transparent;
+}
+.form-inline{
+    padding: 20px;
+    text-align: center; 
+}
+.card{
+    color:#cdeaf3;
+    /*width: 1100px;*/
+    border-radius:10px;
+    margin: 15px;
+    background: transparent;
+    border: 3px solid gray;
+}
+.card-img-left{
+    height: 85px;
+    width: 85px;
+    float: left;  
+    border-radius: 10%; 
+}
+.card-block{
+  padding: 5px;
+}
+.sound-box{
+  opacity: .7;
+  margin: 2%;
+}
