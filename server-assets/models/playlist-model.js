@@ -18,24 +18,14 @@ let Playlist = DS.defineResource({
 })
 
 
-function create(name, song, cb){
-    let playlist = {
+function create(playlist, cb){
+    let playlistObj = {
         id: uuid.v4(),
-        name: name,
-        songs: {
-            title: song.trackName,
-            albumArt: song.artworkUrl60,
-            artist: song.artistName,
-            collection: song.collectionName,
-            price: song.trackPrice,
-            preview: song.previewUrl,
-            id: song.trackId,
-            purchaseUrl: song.trackViewUrl123
-          }
+        name: playlist.name,
+        songs: playlist.songs
+          
         }
-      }
-        
-       Playlist.create(playlist).then(cb).catch(cb)
+       Playlist.create(playlistObj).then(cb).catch(cb)
 }
 
 function getAll(query, cb) {
