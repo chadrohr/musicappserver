@@ -4,19 +4,19 @@ let express = require('express'),
   routes = require('./server-assets/routes/index'),
   handlers = require('./utils/handlers'),
   server = express(),
-  port = process.env.PORT || 1582,
+  port = process.env.PORT || 1585,
   http = require('http').Server(server),
   io = require('socket.io')(http), 
-  Planet = require('./server-assets/models/planet-model'),
+  Playlist = require('./server-assets/models/playlist-model'),
   constants = require('./utils/constants');
 
   server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: true }))
-server.use('/', express.static(`${__dirname}/public/planets/`));
+server.use('/', express.static(`${__dirname}/public/playlists/`));
 server.use('/api', cors(handlers.corsOptions), routes.router)
 server.use('/', handlers.defaultErrorHandler)
 
 
 http.listen(port, function () {
-  console.log(`Creating worlds on port: ${port}`);
+  console.log(`Creating Playlists on port: ${port}`);
 })
