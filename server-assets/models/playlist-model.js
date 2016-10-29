@@ -4,45 +4,74 @@ let dataAdapter = require('./data-adapter'),
   formatQuery = dataAdapter.formatQuery;
 
 let Playlist = DS.defineResource({
-  name: 'playlist',
-  endpoint: 'playlists',
-  filepath: __dirname + '/../data/playlists.db',
-  // relations: {
-  //   hasMany: {
-  //     song: {
-  //       localField: 'songs',
-  //       foreignKey: 'playlistId'
-  //     } 
-  //   }
-  // }
+    name: 'playlist',
+    endpoint: 'playlists',
+    // filepath: __dirname + '/../data/playlists.db'    
 })
 
-
-function create(playlist, cb){
+function create(playlist, cb) {
     let playlistObj = {
         id: uuid.v4(),
         name: playlist.name,
-        songs: playlist.songs
-          
+        songs: playlist.songs,
+        upVotes: playlist.upVotes,
+        downVotes: playlist.downVotes
+    }
+}
+
+function editPlaylist(id, input, cb) {
+    Playlist.find(id).then(function (playlist) {
+        if (input.vote && input.vote == "down") {
+            if (playlist.downVotes) {
+                playlist.downVotes++
+            } else {
+                playlist.downVotes = 1
+            }
         }
-       Playlist.create(playlistObj).then(cb).catch(cb)
+        if (input.vote && input.vote == "up") {
+            if (playlist.upVotes) {
+                playlist.upVotes++
+            } else {
+                playlist.upVotes = 1
+            }
+        }
+        if (input.name) {
+            playlist.name = input.name || {}
+        }
+        if (input.songs) {
+            playlist.songs = input.songs || {}
+        }
+        Playlist.update(playlist.id, playlist)
+            .then(cb)
+            .catch(cb)
+    }).catch(cb)
+}
+
+function removeSong(id, songId, cb) {
+    Playlist.find(id).then(function (playlist) {
+        playlist.songs[songId] = null
+        Playlist.update(playlist.id, playlist)
+            .then(cb)
+            .catch(cb)
+    }).catch(cb)
 }
 
 function getAll(query, cb) {
-  //Use the Resource Model to get all Playlists
-  Playlist.findAll({}).then(cb).catch(cb)
+    Playlist.findAll({}, formatQuery(query)).then(cb).catch(cb)
 }
 
 function getById(id, query, cb) {
-  // use the Resource Model to get a single playlist by its id
-  Playlist.find(id, formatQuery(query)).then(cb).catch(cb)
+    Playlist.find(id, formatQuery(query)).then(cb).catch(cb)
 }
 
 module.exports = {
-  create,
-  getAll,
-  getById
+    create,
+    getAll,
+    getById,
+    editPlaylist,
+    removeSong
 }
+
 
 
 
