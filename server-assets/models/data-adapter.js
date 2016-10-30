@@ -3,15 +3,16 @@ let uuid = require('node-uuid'),
   FBAdapter = require('js-data-firebase'),
   DS = new JsData.DS();
 
+let fbAdapter = new FBAdapter({
+  basePath: 'https://my-musical-life.firebaseio.com/'
+})
+
 function formatQuery(query){
   query = query || ''
   return {
     with: query.split(',').join(' ').split(' ')
   }
 }
-let fbAdapter = new FBAdapter({
-  basePath: 'https://my-musical-life.firebaseio.com/'
-})
 
 DS.registerAdapter('firebase', fbAdapter, { default: true })
 

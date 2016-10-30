@@ -17,6 +17,7 @@ function create(playlist, cb) {
         upVotes: playlist.upVotes,
         downVotes: playlist.downVotes
     }
+     Playlist.create(playlistObj).then(cb).catch(cb)
 }
 
 function editPlaylist(id, input, cb) {
